@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+PLDA-venv/
+.env
+*.key
+*.pem
+*.token
+secrets/
+data/cases/*
+data/sources/*
+data/index/*
+database/*.db
+database/*.sqlite
+database/*.sqlite3
