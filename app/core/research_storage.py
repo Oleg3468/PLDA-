@@ -11,10 +11,10 @@ from app.core.document_ingestor import (
     ingest,
     file_hash,
 )
+from app.core.config import CASES_DIR
 
 
-ROOT = Path("/storage/sdcard/PLDA")
-CASE_DIR = ROOT / "data" / "cases"
+CASE_DIR = CASES_DIR
 
 
 @dataclass
@@ -27,15 +27,15 @@ class ResearchAction:
 
 
 def prepare_case(case_id: str) -> Path:
-    safe_id = "".join(
-        char for char in case_id
-        if char.isalnum() or char in "-_"
-    )
+    if (
+        not isinstance(case_id, str)
+        or not case_id
+        or len(case_id) > 80
+        or any(not (char.isalnum() or char in "-_") for char in case_id)
+    ):
+        raise ValueError("case_id must contain only letters, numbers, '-' or '_'.")
 
-    if not safe_id:
-        raise ValueError("Invalid case ID")
-
-    path = CASE_DIR / safe_id
+    path = CASE_DIR / case_id
     path.mkdir(parents=True, exist_ok=True)
 
     return path
@@ -59,8 +59,8 @@ def process_document(
             action="online_only",
             saved=False,
             reason=(
-                "Документ не сохраняется. "
-                "Используется только онлайн-просмотр."
+                "Документ не сохранён. Используется онлайн-просмотр "
+                "или требуется подтверждение сохранения."
             ),
         )
 
@@ -69,13 +69,12 @@ def process_document(
             "case_id is required when saving a case."
         )
 
-    case_path = prepare_case(case_id)
-
     source = Path(source_path)
 
-    if not source.exists():
+    if not source.is_file():
         raise FileNotFoundError(source_path)
 
+    case_path = prepare_case(case_id)
     destination = case_path / source.name
 
     if destination.exists():
@@ -106,8 +105,8 @@ def process_document(
         saved=True,
         path=metadata["source_path"],
         reason=(
-            "Документ сохранён на SD, "
-            "извлечён и добавлен в локальное хранилище."
+            "Документ сохранён в локальном каталоге дел, "
+            "проверен по SHA-256 и добавлен в хранилище."
         ),
     )
 

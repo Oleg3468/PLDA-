@@ -1,14 +1,28 @@
 import sqlite3
-from pathlib import Path
-from typing import Optional
+from contextlib import contextmanager
+from typing import Iterator, Optional
 
-DB_PATH = Path("/storage/sdcard/PLDA/database/plda.db")
+from app.core.config import DATABASE_DIR, DATABASE_SCHEMA_PATH
+
+DB_PATH = DATABASE_DIR / "plda.db"
 
 
-def connect():
+@contextmanager
+def connect() -> Iterator[sqlite3.Connection]:
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
-    return connection
+
+    try:
+        schema = DATABASE_SCHEMA_PATH.read_text(encoding="utf-8")
+        connection.executescript(schema)
+        yield connection
+        connection.commit()
+    except Exception:
+        connection.rollback()
+        raise
+    finally:
+        connection.close()
 
 
 def add_source(

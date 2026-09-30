@@ -57,8 +57,24 @@ JURISDICTIONS = {
 }
 
 
+def normalize_jurisdiction_code(country_code: str) -> str:
+    if not isinstance(country_code, str) or not country_code.strip():
+        raise ValueError("A supported jurisdiction code is required.")
+
+    normalized = country_code.strip().upper()
+    if normalized not in JURISDICTIONS:
+        supported = ", ".join(sorted(JURISDICTIONS))
+        raise ValueError(
+            f"Unsupported jurisdiction {country_code!r}. Supported codes: {supported}."
+        )
+
+    return normalized
+
+
 def get_jurisdiction(country_code: str) -> Optional[JurisdictionProfile]:
-    return JURISDICTIONS.get(country_code.upper())
+    if not isinstance(country_code, str):
+        return None
+    return JURISDICTIONS.get(country_code.strip().upper())
 
 
 def get_applicable_layers(country_code: str) -> List[str]:

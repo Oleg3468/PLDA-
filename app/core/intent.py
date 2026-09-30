@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import re
 from typing import List
 
 
@@ -50,12 +51,10 @@ def analyze_intent(request: str) -> LegalIntent:
             ],
         )
 
-    if any(word in text for word in [
-        "полиция",
-        "полицейский",
-        "остановили",
-        "задержали",
-    ]):
+    if re.search(
+        r"\b(?:полиц\w*|полицейск\w*|останов\w*|задерж\w*|police|officers?|detain\w*|arrest\w*|pulled over)\b",
+        text,
+    ):
         return LegalIntent(
             original_request=request,
             legal_goal="Определить права пользователя и законность действий полиции",

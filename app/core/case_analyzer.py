@@ -5,6 +5,7 @@ from app.core.intent import analyze_intent
 from app.core.research import create_research_plan
 from app.core.police_engine import get_question_codes
 from app.core.opportunity import opportunity_checklist
+from app.core.jurisdiction import normalize_jurisdiction_code
 
 
 @dataclass
@@ -26,12 +27,13 @@ def analyze_case(
     facts: List[str] = None,
 ) -> CaseAnalysis:
 
+    normalized_jurisdiction = normalize_jurisdiction_code(jurisdiction)
     intent = analyze_intent(request)
-    plan = create_research_plan(request, jurisdiction)
+    plan = create_research_plan(request, normalized_jurisdiction)
 
     return CaseAnalysis(
         original_request=request,
-        jurisdiction=jurisdiction,
+        jurisdiction=normalized_jurisdiction,
         legal_goal=intent.legal_goal,
         category=intent.category,
         facts=facts or [],

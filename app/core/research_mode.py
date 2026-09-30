@@ -48,6 +48,9 @@ def auto_policy() -> ResearchPolicy:
 
 
 def get_policy(mode: str) -> ResearchPolicy:
+    if not isinstance(mode, str) or not mode.strip():
+        raise ValueError("Research mode must be auto, case, or consultation.")
+
     value = mode.lower().strip()
 
     if value == "consultation":
@@ -56,7 +59,12 @@ def get_policy(mode: str) -> ResearchPolicy:
     if value == "case":
         return case_policy()
 
-    return auto_policy()
+    if value == "auto":
+        return auto_policy()
+
+    raise ValueError(
+        f"Unknown research mode {mode!r}. Use auto, case, or consultation."
+    )
 
 
 def should_download(
@@ -65,9 +73,6 @@ def should_download(
 ) -> bool:
 
     policy = get_policy(mode)
-
-    if policy.mode == ResearchMode.CASE:
-        return True
 
     if policy.mode == ResearchMode.CONSULTATION:
         return False
