@@ -1,109 +1,49 @@
-# PLDA Project Status
+# Состояние PLDA
 
-This document describes the current implementation state.
-File existence does not prove complete functionality.
+Последнее описание состояния: 30 сентября 2026 года.
 
-## IMPLEMENTED / PRESENT IN CODE
+## Основной результат репозитория
 
-### Core legal research
-- case analysis
-- intent analysis
-- research planning
-- jurisdiction handling
-- legal repository
-- source handling
-- source verification
-- evidence registry
-- legal conflict handling
-- law timeline
-- international rights
-- constitutional limits
-- research modes
-- research storage
-- document ingestion
+Теперь первичное назначение PLDA — справочник правил правового исследования, каталог источников, инструкция для разных ИИ и рабочие шаблоны. Использование markdown-файлов не требует установки Python, запуска приложения, AI API-ключа или подписки на конкретную модель. Подключение файлов к выбранному ИИ зависит от возможностей и прав доступа той платформы.
 
-### Domain modules
-- police-law engine
-- tax engine
-- opportunity analysis
+Основная навигация:
+- `README.md`
+- `AI_START_HERE.md`
+- `docs/PROMPT_FOR_ANY_AI.md`
+- `docs/legal-library/`
+- `docs/templates/`
 
-### Database
-SQLite database:
-`database/plda.db`
+## Библиотека и границы
 
-Known legal structures include:
-- legal_sources
-- arguments
-- research_history
+В `docs/legal-library/` находятся справочные разделы по:
+- каталогу официальных источников;
+- поиску и проверке права;
+- международным правам человека и процедурам;
+- международным судам и региональным механизмам;
+- международным налоговым спорам.
 
-## PARTIAL / REQUIRES VERIFICATION
+Каталог — стартовая карта, не исчерпывающее собрание законодательства. Ссылку, норму, применимость, срок, языковую версию и редакцию надо перепроверять для конкретного дела. Страновая база не считается созданной только из-за упоминания страны в коде или тесте.
 
-The existence of a module does not establish that it is
-production-ready or covers all jurisdictions.
+## Сохранённый экспериментальный код
 
-These areas require functional verification:
-- multi-agent orchestration
-- source acquisition from live official databases
-- national jurisdiction coverage
-- international organization source coverage
-- UN document retrieval
-- court database retrieval
-- document download policies
-- consultation mode
-- case mode
-- complete citation generation
-- source verification completeness
-- legal version tracking completeness
-- cross-agent disagreement handling
-- automated testing
-- external API integrations
+В репозитории присутствуют Python-папки `app/`, `agents/`, `main.py`, `database/` и тесты в `tests/`. Это унаследованный прототип; его фактическая работа и правовая корректность не подтверждаются наличием модулей. Он не нужен для использования справочника и не должен по умолчанию расширяться как приложение.
 
-## PLANNED
+`database/schema.sql` отслеживается Git. Файл `database/plda.db` не присутствует в отслеживаемом списке файлов; не утверждайте, что база уже наполнена или содержит проверенную библиотеку.
 
-Potential future development:
-- expanded jurisdiction packs
-- specialized source agents
-- UN-focused research agent
-- court-law research agents
-- stronger primary-source connectors
-- machine-learning components
-- broader automated testing
-- production deployment
-- multi-device setup automation
+## Проверки кода
 
-## IMPORTANT AI RULE
+Тесты могут проверять только существующее поведение прототипа и не валидируют полноту права, актуальность ссылок или приемлемость конкретной жалобы. Указывать результат тестов можно только после фактического запуска.
 
-Do not claim that a feature is implemented merely because
-a file or class with a related name exists.
+## Не реализовано / не подтверждено
 
-Before modifying a subsystem:
-1. Read the relevant source code.
-2. Inspect its callers.
-3. Inspect its database dependencies.
-4. Check available tests.
-5. Determine actual behavior.
-6. Distinguish implemented behavior from planned behavior.
+- автоматическая актуализация законодательства;
+- надёжное получение права из live-официальных API;
+- полная база странового права;
+- проверка применимости права к конкретному делу;
+- профессиональная юридическая консультация;
+- гарантированная подача, принятие или результат жалобы;
+- юридически проверенные шаблоны для подачи без специалиста.
 
-## LEGAL SAFETY
+## Безопасность
 
-PLDA is a legal research system.
-
-It must:
-- identify jurisdiction;
-- identify relevant date;
-- prefer primary official sources;
-- distinguish binding law from non-binding material;
-- trace important conclusions to sources;
-- distinguish facts from assumptions;
-- preserve uncertainty;
-- never invent legal authority;
-- preserve relevant counterarguments and disagreements.
-
-## PORTABILITY
-
-The repository must eventually contain enough documentation
-and configuration templates for another developer or AI system
-to reconstruct the development environment.
-
-Secrets must never be committed.
-Private case data must not be committed unless explicitly intended.
+Не храните в Git секреты, персональные или конфиденциальные документы дела. Применяйте обезличивание и отдельно проверяйте настройки хранения данных у выбранного ИИ.

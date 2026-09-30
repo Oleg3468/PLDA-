@@ -1,47 +1,31 @@
-# PLDA - AI Context
+# PLDA — контекст для любого ИИ
 
-## Project
-PLDA is a multi-agent legal research system.
+## Назначение репозитория
 
-## Mission
-Provide traceable legal research using verified national
-and international legal sources.
+PLDA — Git-справочник по правовому исследованию: правила, методика поиска, каталог официальных источников и шаблоны черновиков. Это не веб-приложение, не правовая база с гарантированно полным содержанием и не юридическая консультация. Репозиторий можно использовать с разными ИИ, если выбранная платформа позволяет подключить или загрузить файлы. Подписка на определённый ИИ для чтения файлов сама по себе не является частью PLDA.
 
-## Core principles
-- Every important conclusion must be traceable to a source.
-- Use national and international law together when applicable.
-- Never present assumptions as facts.
-- Never invent a legal basis.
-- Always identify jurisdiction and date.
-- Prefer primary official sources.
-- Preserve disagreements between agents.
-- Distinguish binding law from soft law and commentary.
-- Track legal source versions and effective dates.
-- Do not claim legal certainty without sufficient evidence.
+## Главная инструкция
 
-## MVP scope
-- 1-2 jurisdictions initially.
-- 5-7 specialized agents.
-- CONSULTATION and CASE modes.
-- Primary official sources.
-- Source Verification.
-- Law Timeline.
+Перед исследованием используйте `docs/PROMPT_FOR_ANY_AI.md`. Навигация — `README.md` и `AI_START_HERE.md`. Проверяйте актуальные тексты правовых норм и сроки в первоисточниках на дату каждого исследования.
 
-## Development rules
-1. Read AGENTS.md before changing code.
-2. Inspect existing implementation before creating files.
-3. Do not replace working modules without verification.
-4. Do not invent APIs, database schemas, or dependencies.
-5. Keep changes small and traceable.
-6. Run available tests after changes.
-7. Document incomplete functionality.
-8. Never expose secrets or private case data.
+## Непеременные принципы
 
-## AI handover
-Before continuing development:
-- Inspect the repository.
-- Read README.md and AGENTS.md.
-- Read relevant files under docs/.
-- Check Git history.
-- Identify implemented versus planned functionality.
-- Explain changes before making destructive modifications.
+- Определять юрисдикцию, орган, предмет и релевантную дату.
+- Предпочитать официальный первичный источник.
+- Проверять точный текст и применимую редакцию.
+- Указывать ссылку, статью/пункт и дату проверки.
+- Разделять подтверждённые факты, утверждения, предположения, толкование и вывод.
+- Различать обязательное право, рекомендательный материал и вторичный комментарий.
+- Раскрывать контраргументы, пробелы и неопределённость.
+- Не выдумывать право, источник, цитату, дело, срок или полномочия.
+- Не раскрывать персональные данные и конфиденциальную информацию без необходимости и согласия.
+
+## Состав и пределы
+
+`docs/legal-library/` содержит навигацию и рабочие гайды по международным источникам, правам человека, международным судам и налоговым вопросам. Эти страницы не заменяют официальные документы и должны перепроверяться.
+
+`app/`, `agents/`, `database/`, `main.py`, `tests/` — унаследованный экспериментальный код. Его нельзя считать готовой системой, юридически проверенным продуктом, live-коннектором к источникам или доказательством покрытия страны. Для использования текстовой базы его устанавливать не нужно.
+
+## Язык и изменения
+
+Объяснения справочника ведутся преимущественно на русском. Официальные названия оставляются на языке источника там, где это помогает найти документ. Новые разделы документируют издателя, статус источника, дату проверки и границы применимости. Состояние прототипа см. в `PROJECT_STATUS.md`.

@@ -1,21 +1,7 @@
-# PLDA Development
+# Заметки по экспериментальному прототипу
 
-## Current repository
-The repository contains an existing MVP structure.
-Do not assume every planned feature is implemented.
+Основное назначение репозитория — правовая база знаний и инструкции для разных ИИ, а не веб-приложение. Этот документ относится только к сохранённому Python-коду в `app/`, `agents/`, `database/`, `main.py` и `tests/`.
 
-## Required workflow
-1. Inspect repository.
-2. Identify the relevant module.
-3. Make a minimal change.
-4. Run available checks.
-5. Record limitations.
-6. Commit the change.
+Наличие файла или теста не доказывает полноту функции, юридическую корректность или поддержку конкретной юрисдикции. Проверяйте фактический модуль, вызывающий код, зависимости, схему и тесты перед изменениями. Не описывайте прототип как production-систему или live-коннектор, если такое поведение не проверено.
 
-## Portability
-Dependencies, environment configuration, startup instructions,
-and data requirements must be documented.
-
-## Security
-Never commit API keys, passwords, tokens, or private case data.
-Use environment variables and documented configuration templates.
+Для правок справочника Python-среда не требуется. Следуйте [`CONTRIBUTING.md`](../CONTRIBUTING.md). Для кода не добавляйте секреты, конфиденциальные дела или ненужную локальную базу SQLite в Git; конфигурация и данные должны быть явно описаны и проверены.

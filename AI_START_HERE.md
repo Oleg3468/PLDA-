@@ -1,174 +1,37 @@
-# PLDA — AI START HERE
+# PLDA — начать работу с базой знаний
 
-## Purpose
+## Что это
 
-PLDA is a multi-agent legal research AI system.
+Репозиторий — переносимый свод правил и библиотека правовых поисковых источников. Это не приложение и не самостоятельная юридическая служба. В нём сохранён старый экспериментальный код, но для чтения материалов он не нужен.
 
-The repository is the primary handover point for continuing development
-with another AI or on another device.
+## Как продолжить с любым ИИ
 
-## FIRST STEPS FOR ANY AI
+1. Передайте ИИ файл [`docs/PROMPT_FOR_ANY_AI.md`](docs/PROMPT_FOR_ANY_AI.md).
+2. Передайте соответствующие тематические документы из `docs/legal-library/`, `docs/legal-principles.md` и `docs/source-verification.md`.
+3. Если исследование касается конкретной страны, предоставьте страну и попросите ИИ сначала найти первоисточники её официального законодательства и суда.
+4. Для работы над самим репозиторием также передайте `AGENTS.md`, `AI_CONTEXT.md` и `PROJECT_STATUS.md`.
 
-Before changing code:
+ИИ не получает доступ к GitHub автоматически: подключение репозитория или передача файлов зависит от возможностей и настроек выбранной платформы. Сам справочник не требует AI API, подписки на модель, установки или запуска кода.
 
-1. Read `AGENTS.md`.
-2. Read `AI_CONTEXT.md`.
-3. Read `PROJECT_STATUS.md`.
-4. Read `CONTRIBUTING.md`.
-5. Read relevant files in `docs/`.
-6. Inspect the current Git status and recent commits.
-7. Inspect the actual implementation before making assumptions.
+## Обязательный порядок исследования
 
-## IMPORTANT RULE
+- Уточнить юрисдикцию, вид процедуры и значимые даты.
+- Разделить подтверждённые факты, утверждения сторон, предположения и неизвестное.
+- Найти и проверить первичные официальные источники.
+- Проверить применимость нормы к государству, лицу, предмету и периоду.
+- Проверить сроки, компетенцию органа, исчерпание внутренних средств защиты и иные условия отдельно по конкретной процедуре.
+- Показать возражения, альтернативные объяснения и пределы вывода.
+- Не превращать модель, рекомендацию или вспомогательный источник в обязательное право.
 
-Do not assume that a file existing means that its functionality is complete.
+## Что ещё прочитать
 
-Verify:
-- implementation;
-- callers;
-- dependencies;
-- database usage;
-- tests;
-- actual runtime behavior.
+- Индекс — [`README.md`](README.md)
+- Правила агента — [`AGENTS.md`](AGENTS.md)
+- Реальное состояние кода — [`PROJECT_STATUS.md`](PROJECT_STATUS.md)
+- Каталог официальных источников — [`docs/legal-library/source-catalog.md`](docs/legal-library/source-catalog.md)
+- Поисковый процесс — [`docs/legal-library/search-workflow.md`](docs/legal-library/search-workflow.md)
+- Безопасность — [`docs/source-verification.md`](docs/source-verification.md)
 
-## LEGAL RESEARCH PRINCIPLES
+## Ограничения
 
-PLDA must:
-
-- identify jurisdiction;
-- identify the relevant date;
-- prefer primary official legal sources;
-- distinguish binding law from soft law;
-- verify legal sources;
-- track source versions and effective dates;
-- cite important conclusions;
-- distinguish facts from assumptions;
-- preserve uncertainty;
-- preserve counterarguments;
-- never invent legal authority.
-
-## MVP
-
-Initial target:
-
-- 1–2 jurisdictions;
-- 5–7 specialized agents;
-- CONSULTATION mode;
-- CASE mode;
-- primary official sources;
-- Source Verification;
-- Law Timeline.
-
-Additional functionality must be added incrementally.
-
-## CURRENT IMPLEMENTATION
-
-The project already contains a Python core and SQLite database.
-
-Core modules include functionality for:
-
-- case analysis;
-- research planning;
-- intent analysis;
-- jurisdiction;
-- legal repository;
-- sources;
-- source verification;
-- evidence;
-- legal conflicts;
-- law timeline;
-- international rights;
-- constitutional limits;
-- research modes;
-- research storage;
-- document ingestion;
-- police law;
-- tax law;
-- opportunity analysis.
-
-Database:
-
-`database/plda.db`
-
-Do not replace the database or core architecture without first inspecting
-the existing implementation.
-
-## SOURCE VERIFICATION
-
-An unverified document must not be treated as a confirmed legal norm.
-
-Where available, record:
-
-- source identity;
-- issuing institution;
-- jurisdiction;
-- date;
-- effective status;
-- version;
-- official URL;
-- SHA-256 hash;
-- article/paragraph/section.
-
-## DEVELOPMENT RULES
-
-Make small, reversible changes.
-
-Before modifying a subsystem:
-
-1. inspect the existing code;
-2. identify its callers;
-3. inspect database dependencies;
-4. inspect tests;
-5. determine actual behavior;
-6. make the smallest useful change;
-7. run available checks;
-8. update documentation;
-9. commit the change.
-
-Never delete or replace working code merely to create a cleaner architecture.
-
-## SECURITY
-
-Never commit:
-
-- API keys;
-- passwords;
-- access tokens;
-- private credentials;
-- private case data.
-
-Use environment variables and configuration templates.
-
-## PORTABILITY
-
-The project must remain recoverable from GitHub.
-
-Another AI should be able to reconstruct the project by reading:
-
-- `AI_START_HERE.md`
-- `AGENTS.md`
-- `AI_CONTEXT.md`
-- `PROJECT_STATUS.md`
-- `CONTRIBUTING.md`
-- `README.md`
-- `docs/`
-
-## HANDOVER
-
-When ending a development session:
-
-1. update `PROJECT_STATUS.md` if necessary;
-2. document incomplete work;
-3. run tests/checks;
-4. check `git status`;
-5. commit important changes;
-6. push to GitHub when appropriate.
-
-## DO NOT GUESS
-
-If information is missing, inspect the repository first.
-
-If functionality is not verified, describe it as unverified.
-
-If a legal source cannot be confirmed, do not present it as established law.
-
+Упоминание источника в каталоге не означает, что источник проверен применительно к конкретному делу. Ссылки и нормы перепроверяются на дату исследования. Не сообщайте пользователю, что документ подан, срок соблюдён или дело принято органом, если это отдельно не подтверждено официально.

@@ -1,14 +1,7 @@
-# PLDA Agents
+# Экспериментальные описания агентных модулей
 
-The PLDA agent system consists of:
+Этот каталог и файлы `AGENTS.md` внутри него сохранены из прежнего Python-прототипа PLDA. Названия папок описывают предполагаемые области исследования, но не подтверждают существование автономных ИИ-агентов, работающих интеграций, полного покрытия стран или юридически проверенного вывода.
 
-- orchestrator — coordinates all agents
-- un — United Nations
-- human_rights — human rights
-- echr — European Court of Human Rights
-- national_law — national legislation
-- case_law — judicial decisions
-- police_law — police powers
-- tax_law — tax law
-- research — source discovery
-- evidence — source verification
+Для актуальной методики и источников используйте `docs/legal-library/`, `docs/PROMPT_FOR_ANY_AI.md` и корневые `AGENTS.md`/`PROJECT_STATUS.md`. Инструкции верхнего уровня и документация базы знаний имеют приоритет перед незавершёнными заметками прототипа.
+
+Не требуется запускать или устанавливать этот код для использования справочника. Не расширяйте приложение, если запрос относится к правовым правилам и источникам.
