@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PLDA — правовой исследовательский сервис</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">⚖️</span>
+      <div>
+        <h1>PLDA</h1>
+        <p>Правовой исследовательский сервис · по правилам базы знаний PLDA</p>
+      </div>
+    </div>
+    <div class="badges">
+      <span id="modeBadge" class="badge badge-neutral">загрузка…</span>
+      <span id="sourcesBadge" class="badge badge-neutral">—</span>
+    </div>
+  </header>
+
+  <div class="disclaimer" role="note">
+    ⚠️ Сервис помогает организовать правовое исследование, но <b>не является
+    юридической консультацией</b>. Проверяйте нормы, редакции, сроки и условия
+    в официальных источниках и у квалифицированного специалиста.
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="chat" type="button">💬 Чат</button>
+    <button class="tab" data-tab="memo" type="button">📝 Записка</button>
+    <button class="tab" data-tab="sources" type="button">📚 Источники</button>
+    <button class="tab" data-tab="review" type="button">
+      ✅ Проверка юриста <span id="pendingCount" class="pill hidden">0</span>
+    </button>
+  </nav>
+
+  <main>
+    <!-- ЧАТ -->
+    <section id="chat" class="panel active">
+      <div class="controls">
+        <label>Юрисдикция
+          <select id="jurisdiction">
+            <option value="UA" selected>🇺🇦 Украина</option>
+            <option value="DE">🇩🇪 Германия</option>
+            <option value="FR">🇫🇷 Франция</option>
+            <option value="PL">🇵🇱 Польша</option>
+          </select>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" id="anonymize" checked>
+          Обезличивать данные перед отправкой (рекомендуется)
+        </label>
+      </div>
+
+      <div id="chatWindow" class="chat-window">
+        <div class="message assistant">
+          <div class="bubble">
+            <p>Опишите ситуацию: что произошло, в какой стране, какие решения
+            получены и когда. Я определю рамки исследования по правилам PLDA,
+            подберу официальные источники для проверки и помогу подготовить
+            черновик записки.</p>
+            <p class="hint">Не публикуйте здесь пароли, полные номера счетов и
+            медицинские сведения. Чувствительные данные автоматически
+            обезличиваются.</p>
+          </div>
+        </div>
+      </div>
+
+      <form id="chatForm" class="chat-form">
+        <textarea id="chatInput" rows="3" maxlength="8000"
+          placeholder="Например: получил постановление о штрафе, хочу обжаловать. Украина, решение вручили 5 дней назад…"></textarea>
+        <button type="submit" id="sendButton">Отправить</button>
+      </form>
+    </section>
+
+    <!-- ЗАПИСКА -->
+    <section id="memo" class="panel">
+      <div class="panel-intro">
+        Черновик исследовательской записки по шаблону PLDA. Заполняется в
+        очередь <b>проверки юриста</b> со статусом «ожидает проверки».
+      </div>
+      <form id="memoForm" class="memo-form">
+        <label>Вопрос исследования *
+          <textarea id="memoQuestion" rows="2" required maxlength="8000"
+            placeholder="Например: как обжаловать постановление о административном правонарушении"></textarea>
+        </label>
+        <div class="grid-2">
+          <label>Юрисдикция
+            <select id="memoJurisdiction">
+              <option value="UA" selected>🇺🇦 Украина</option>
+              <option value="DE">🇩🇪 Германия</option>
+              <option value="FR">🇫🇷 Франция</option>
+              <option value="PL">🇵🇱 Польша</option>
+            </select>
+          </label>
+          <label class="checkbox self-end">
+            <input type="checkbox" id="memoAnonymize" checked>
+            Обезличивать данные
+          </label>
+        </div>
+        <label>Факты (по одному на строку)
+          <textarea id="memoFacts" rows="3"
+            placeholder="постановление вручено 2026-09-20&#10;штраф наложен органом [Орган B]"></textarea>
+        </label>
+        <div class="grid-2">
+          <label>Значимые даты (по одной на строку)
+            <textarea id="memoDates" rows="2" placeholder="2026-09-20 — вручение постановления"></textarea>
+          </label>
+          <label>Неизвестные обстоятельства (по одному на строку)
+            <textarea id="memoUnknowns" rows="2" placeholder="дата составления протокола"></textarea>
+          </label>
+        </div>
+        <label>Следующие шаги (по одному на строку; оставьте пустым для стандартных)
+          <textarea id="memoSteps" rows="2"></textarea>
+        </label>
+        <button type="submit" id="memoButton">Сформировать записку</button>
+      </form>
+      <div id="memoResult" class="memo-result hidden">
+        <div class="memo-result-head">
+          <span id="memoStatus" class="badge badge-pending">ожидает проверки юриста</span>
+          <button id="memoDownload" type="button" class="secondary">⬇️ Скачать .md</button>
+        </div>
+        <pre id="memoPreview"></pre>
+      </div>
+    </section>
+
+    <!-- ИСТОЧНИКИ -->
+    <section id="sources" class="panel">
+      <div class="controls">
+        <input type="search" id="sourceQuery" placeholder="Поиск по официальным источникам: обжалование, штраф, алименты…">
+        <select id="sourceJurisdiction">
+          <option value="" selected>все юрисдикции</option>
+          <option value="UA">🇺🇦 Украина</option>
+          <option value="DE">🇩🇪 Германия</option>
+          <option value="FR">🇫🇷 Франция</option>
+          <option value="PL">🇵🇱 Польша</option>
+        </select>
+        <button id="sourceSearch" type="button" class="secondary">Искать</button>
+      </div>
+      <div id="sourceMeta" class="source-meta"></div>
+      <div id="sourceResults"></div>
+    </section>
+
+    <!-- ПРОВЕРКА ЮРИСТА -->
+    <section id="review" class="panel">
+      <div class="panel-intro">
+        Очередь проверки: каждая сгенерированная записка попадает сюда со
+        статусом «ожидает проверки». Юрист может отредактировать текст,
+        одобрить или отклонить. Одобренная записка получает отметку
+        «проверено юристом».
+      </div>
+      <div id="reviewBody">
+        <div id="docsList"></div>
+        <div id="docDetail" class="doc-detail hidden">
+          <div class="doc-detail-head">
+            <button id="docBack" type="button" class="secondary">← К списку</button>
+            <span id="docStatus" class="badge"></span>
+          </div>
+          <h3 id="docTitle"></h3>
+          <p class="hint" id="docMeta"></p>
+          <textarea id="docContent" rows="18"></textarea>
+          <label>Заметка проверяющего
+            <input type="text" id="reviewNote" maxlength="4000"
+              placeholder="Например: проверены ст. и сроки, исправлен раздел 6">
+          </label>
+          <div class="review-actions">
+            <button id="approveButton" type="button" class="primary">✅ Одобрить</button>
+            <button id="rejectButton" type="button" class="danger">✖ Отклонить</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    PLDA — исследовательский инструмент. Ответы формируются по правилам
+    <a href="https://github.com/Oleg3468/PLDA-" target="_blank" rel="noopener">базы знаний PLDA</a>.
+    Данные хранятся локально; внешней LLM отправляются только обезличенные тексты
+    (если она подключена). Не является юридической консультацией.
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

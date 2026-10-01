@@ -1,0 +1,7 @@
+# Веб-сервис PLDA (см. docs/service.md)
+fastapi
+uvicorn[standard]
+httpx
+
+# Тесты
+pytest

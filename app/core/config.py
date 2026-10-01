@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 PROJECT_ROOT = Path(
-    os.environ.get("PLDA_ROOT") or Path.home() / "PLDA"
+    os.environ.get("PLDA_ROOT") or Path(__file__).resolve().parents[2]
 ).expanduser().resolve()
 
 DATA_DIR = PROJECT_ROOT / "data"
