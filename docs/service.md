@@ -20,11 +20,39 @@
 
 ## Запуск
 
+### Самый простой способ — файл запуска
+
+1. Скачайте репозиторий на компьютер (кнопка **Code → Download ZIP** на GitHub и распакуйте, либо `git clone`).
+2. **Windows:** дважды щёлкните `start.bat`
+   **Linux/macOS:** выполните в терминале `./start.sh`
+
+Файл сам создаст окружение, установит зависимости и запустит сервис;
+браузер откроется на `http://localhost:8000`. Остановка — **Ctrl+C**
+в окне терминала. Требуется только установленный Python
+(Windows: https://www.python.org/downloads/, при установке отметьте
+«Add Python to PATH»).
+
+### Запуск вручную (те же шаги по отдельности)
+
 ```bash
+# Windows: py -m venv .venv  и далее .venv\Scripts\...
+git clone -b arena/01a0f6fb-plda https://github.com/Oleg3468/PLDA-.git
 cd PLDA-
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/uvicorn app.api.main:app --host 0.0.0.0 --port 8000
+```
+
+### Включение полноценного режима ИИ (необязательно)
+
+Перед запуском задайте ключ OpenAI-совместимого API:
+
+```bash
+# Linux / macOS
+export PLDA_LLM_API_KEY="ваш-ключ"
+
+# Windows (cmd)
+set PLDA_LLM_API_KEY=ваш-ключ
 ```
 
 При первом старте база `database/plda.db` создаётся автоматически и
