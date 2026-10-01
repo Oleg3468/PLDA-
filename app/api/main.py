@@ -32,6 +32,7 @@ from app.services import anonymizer, llm, memo as memo_service, offline_answer
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 PROMPT_FOR_ANY_AI = PROJECT_ROOT / "docs" / "PROMPT_FOR_ANY_AI.md"
+AGENTS_INDEX = PROJECT_ROOT / "agents" / "README.md"
 
 
 @asynccontextmanager
@@ -134,12 +135,19 @@ def _sources_block(sources: List[Dict[str, Any]]) -> str:
 
 def _system_prompt(sources: List[Dict[str, Any]], jurisdiction: str) -> str:
     base_rules = PROMPT_FOR_ANY_AI.read_text(encoding="utf-8")
+    agents_routing = ""
+    if AGENTS_INDEX.exists():
+        agents_routing = AGENTS_INDEX.read_text(encoding="utf-8")
     country = JURISDICTIONS[jurisdiction].country
     return (
         f"{base_rules}\n\n"
         "---\n"
         f"Дополнительный контекст сессии: юрисдикция по умолчанию — {country} "
         f"({jurisdiction}).\n"
+        "Декомпозицию вопроса веди по двум плоскостям анализа и маршрутизации "
+        "специализированных агентов PLDA:\n\n"
+        f"{agents_routing}\n\n"
+        "---\n"
         "Ниже — источники из локальной проверяемой базы PLDA. Используй их как "
         "стартовые указатели; не описывай их содержание как прочитанное, если "
         "не можешь открыть ссылку. Отмечай статус проверки каждого источника.\n\n"

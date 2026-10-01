@@ -1,4 +1,9 @@
-"""Наполнение базы PLDA стартовым набором украинских официальных источников.
+"""Наполнение базы PLDA стартовыми каталогами источников.
+
+Загружаются все JSON-файлы из database/seed/:
+  - ukraine_core.json       — официальные источники Украины (плоскость «физлицо»);
+  - international_core.json — международные источники ООН/ЕКПЧ/беженцы
+                              (плоскость «человек», см. person-statuses.md).
 
 Запуск вручную:  python -m database.seed_ukraine  (из корня репозитория)
 Сервис вызывает функцию run_seed автоматически при пустой базе.
@@ -13,12 +18,15 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 
-SEED_PATH = Path(__file__).resolve().parent / "seed" / "ukraine_core.json"
+SEED_DIR = Path(__file__).resolve().parent / "seed"
 
 
 def load_seed() -> List[Dict[str, Any]]:
-    payload = json.loads(SEED_PATH.read_text(encoding="utf-8"))
-    return payload.get("sources", [])
+    sources: List[Dict[str, Any]] = []
+    for seed_file in sorted(SEED_DIR.glob("*.json")):
+        payload = json.loads(seed_file.read_text(encoding="utf-8"))
+        sources.extend(payload.get("sources", []))
+    return sources
 
 
 def run_seed() -> Dict[str, int]:

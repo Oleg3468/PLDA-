@@ -24,6 +24,8 @@ PLDA — не веб-приложение и не платная AI-служба
 - [Права человека и процедуры ООН](docs/legal-library/human-rights.md)
 - [Международные суды и региональные механизмы](docs/legal-library/international-courts.md)
 - [ЕС, «Резерв+» и украинские мужчины за границей](docs/legal-library/eu-temporary-protection-ukrainian-men.md)
+- [ООН о мобилизации в Украине: отказники по убеждениям](docs/legal-library/un-ukraine-mobilisation-rights.md)
+- [Две плоскости статуса: «физлицо» и «человек»](docs/legal-library/person-statuses.md)
 - [Международные налоговые вопросы](docs/legal-library/international-tax.md)
 - [Каталог официальных источников](docs/legal-library/source-catalog.md)
 - [Шаблон первичного сбора фактов](docs/templates/case-intake.md)
