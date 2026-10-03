@@ -27,7 +27,7 @@ from app.core import rag
 from app.core.case_analyzer import analyze_case
 from app.core.jurisdiction import JURISDICTIONS, normalize_jurisdiction_code
 from app.db import db_path, execute, fetch_all, fetch_one, init_db, seed_if_empty
-from app.services import anonymizer, llm, memo as memo_service, offline_answer
+from app.services import anonymizer, evaluator, llm, memo as memo_service, offline_answer
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
@@ -265,6 +265,12 @@ async def chat(request: ChatRequest) -> Dict[str, Any]:
         "llm_configured": settings["configured"],
         "llm_error": llm_error,
     }
+
+
+@app.get("/api/eval")
+def run_eval() -> Dict[str, Any]:
+    """Прогоняет «золотой набор» контрольных вопросов (tests/golden)."""
+    return evaluator.run_golden_evaluation()
 
 
 @app.get("/api/sources")

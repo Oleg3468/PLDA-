@@ -103,7 +103,32 @@ def _render(case, plan, sources: List[Dict[str, Any]], jurisdiction: str) -> str
             lines.append(f"- {unknown}")
         lines.append("")
 
-    lines.append("### 3. План исследования (по правилам PLDA)")
+    lines.append("### 3. Плоскости анализа (см. person-statuses.md)")
+    lines.append("")
+    national_sources = [
+        source
+        for source in sources
+        if source.get("jurisdiction") != "international"
+    ]
+    international_sources = [
+        source
+        for source in sources
+        if source.get("jurisdiction") == "international"
+    ]
+    lines.append("**Физическое лицо (национальное право):**")
+    for source in national_sources:
+        lines.append(f"- {source.get('title')}")
+    if not national_sources:
+        lines.append("- источники национального права не найдены в локальной базе")
+    lines.append("")
+    lines.append("**Человек (права человека и международная защита):**")
+    for source in international_sources:
+        lines.append(f"- {source.get('title')}")
+    if not international_sources:
+        lines.append("- международные источники не найдены в локальной базе")
+    lines.append("")
+
+    lines.append("### 4. План исследования (по правилам PLDA)")
     lines.append("")
     for task in case.research_tasks:
         lines.append(f"- {task}")
@@ -114,7 +139,7 @@ def _render(case, plan, sources: List[Dict[str, Any]], jurisdiction: str) -> str
             lines.append(f"- {code}")
     lines.append("")
 
-    lines.append("### 4. Источники для первичной проверки")
+    lines.append("### 5. Источники для первичной проверки")
     lines.append("")
     if sources:
         for source in sources:
@@ -126,7 +151,7 @@ def _render(case, plan, sources: List[Dict[str, Any]], jurisdiction: str) -> str
         )
     lines.append("")
 
-    lines.append("### 5. Следующие шаги")
+    lines.append("### 6. Следующие шаги")
     lines.append("")
     lines.append("1. Уточните орган, вид процедуры и стадию.")
     lines.append(
@@ -142,7 +167,7 @@ def _render(case, plan, sources: List[Dict[str, Any]], jurisdiction: str) -> str
     )
     lines.append("")
 
-    lines.append("### 6. Ограничения ответа")
+    lines.append("### 7. Ограничения ответа")
     lines.append("")
     lines.append(
         "Ответ построен детерминированно из правил PLDA и локального каталога "
