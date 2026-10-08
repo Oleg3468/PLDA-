@@ -30,6 +30,7 @@ PLDA — не веб-приложение и не платная AI-служба
 - [Каталог официальных источников](docs/legal-library/source-catalog.md)
 - [Шаблон первичного сбора фактов](docs/templates/case-intake.md)
 - [Шаблон правовой записки](docs/templates/legal-memo.md)
+- [Шаблон требования о персональных данных](docs/templates/data-protection-demand.md)
 - [Состояние репозитория](PROJECT_STATUS.md)
 
 ## Рекомендуемая структура дальнейшего пополнения
