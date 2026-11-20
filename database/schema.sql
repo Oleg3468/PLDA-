@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS legal_sources (
     effective_from TEXT,
     effective_to TEXT,
     verified INTEGER NOT NULL DEFAULT 0 CHECK (verified IN (0, 1)),
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    checked_at TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_legal_sources_jurisdiction
@@ -49,4 +50,36 @@ CREATE TABLE IF NOT EXISTS argument_evidence (
 CREATE INDEX IF NOT EXISTS idx_argument_evidence_status
     ON argument_evidence (verification_status);
 
-PRAGMA user_version = 1;
+-- Сервисные таблицы веб-сервиса PLDA (см. docs/service.md)
+
+CREATE TABLE IF NOT EXISTS documents (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    case_id TEXT NOT NULL,
+    doc_type TEXT NOT NULL DEFAULT 'legal_memo',
+    title TEXT,
+    content_md TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'pending_review'
+        CHECK (status IN ('pending_review', 'approved', 'rejected')),
+    reviewer_note TEXT,
+    anonymized INTEGER NOT NULL DEFAULT 0 CHECK (anonymized IN (0, 1)),
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reviewed_at TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_documents_status
+    ON documents (status, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id TEXT NOT NULL,
+    role TEXT NOT NULL CHECK (role IN ('user', 'assistant')),
+    content TEXT NOT NULL,
+    mode TEXT,
+    anonymized INTEGER NOT NULL DEFAULT 0 CHECK (anonymized IN (0, 1)),
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_chat_messages_session
+    ON chat_messages (session_id, created_at);
+
+PRAGMA user_version = 2;

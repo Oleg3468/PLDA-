@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "created": "2026-10-01",
+    "title": "Золотой набор правовых вопросов PLDA",
+    "description": "Контроль качества сервиса измеримыми проверками (идея перенята у google-research/rrsi: изменения правил и промптов подтверждаются измерениями, а не впечатлениями). Каждый кейс проверяет: (1) RAG-поиск находит ожидаемые официальные источники; (2) плоскости анализа отражаются в ответе; (3) оффлайн-ответ содержит обязательные элементы и дисклеймер; (4) записка содержит обязательные элементы. Запуск: pytest tests/test_golden.py или GET /api/eval. При изменении промптов, правил, сида или карточек агентов набор должен проходить полностью; падение — сигнал регрессии."
+  },
+  "cases": [
+    {
+      "id": "UA-001",
+      "question": "Получил постановление о штрафе, хочу его обжаловать",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["адміністративні правопорушення", "адміністративного судочинства"],
+      "answer_must_contain": ["Физическое лицо"]
+    },
+    {
+      "id": "UA-002",
+      "question": "Как обжаловать решение суда, подать апелляцию",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["Цивільний процесуальний кодекс"],
+      "answer_must_contain": []
+    },
+    {
+      "id": "UA-003",
+      "question": "Меня задержала полиция, проводят обыск",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["Кримінальний процесуальний кодекс"],
+      "answer_must_contain": ["Ключевые вопросы"]
+    },
+    {
+      "id": "UA-004",
+      "question": "Арест имущества исполнительное производство взыскание долга",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["виконавче провадження"],
+      "answer_must_contain": []
+    },
+    {
+      "id": "UA-005",
+      "question": "Как подать на алименты после развода",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["Сімейний кодекс"],
+      "answer_must_contain": []
+    },
+    {
+      "id": "UA-006",
+      "question": "Незаконное увольнение, не выплачивают зарплату",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["законів про працю"],
+      "answer_must_contain": []
+    },
+    {
+      "id": "UA-007",
+      "question": "Где получить бесплатную юридическую помощь малоимущему",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["безоплатну правову допомогу"],
+      "answer_must_contain": []
+    },
+    {
+      "id": "UA-008",
+      "question": "Жалоба на бездействие государственного органа",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["звернення громадян", "адміністративного судочинства"],
+      "answer_must_contain": []
+    },
+    {
+      "id": "UA-009",
+      "question": "Разглашение персональных данных без согласия",
+      "jurisdiction": "UA",
+      "planes": ["physical_person"],
+      "expected_sources": ["захист персональних даних"],
+      "answer_must_contain": []
+    },
+    {
+      "id": "INT-001",
+      "question": "Хочу просить убежище, я беженец, невысылка",
+      "jurisdiction": "UA",
+      "planes": ["human"],
+      "expected_sources": ["Конвенция о статусе беженцев"],
+      "answer_must_contain": ["Человек"]
+    },
+    {
+      "id": "INT-002",
+      "question": "Отказ от военной службы по убеждениям, мобилизация",
+      "jurisdiction": "UA",
+      "planes": ["human"],
+      "expected_sources": ["A/HRC/61/61"],
+      "answer_must_contain": ["Человек"]
+    },
+    {
+      "id": "INT-003",
+      "question": "Незаконно пересёк границу и прошу убежища",
+      "jurisdiction": "UA",
+      "planes": ["physical_person", "human"],
+      "expected_sources": ["Конвенция о статусе беженцев"],
+      "answer_must_contain": ["Человек", "Физическое лицо"]
+    }
+  ]
+}

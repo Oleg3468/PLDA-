@@ -28,6 +28,7 @@
 - Индекс — [`README.md`](README.md)
 - Правила агента — [`AGENTS.md`](AGENTS.md)
 - Реальное состояние кода — [`PROJECT_STATUS.md`](PROJECT_STATUS.md)
+- Локальный веб-сервис — [`docs/service.md`](docs/service.md)
 - Каталог официальных источников — [`docs/legal-library/source-catalog.md`](docs/legal-library/source-catalog.md)
 - Поисковый процесс — [`docs/legal-library/search-workflow.md`](docs/legal-library/search-workflow.md)
 - Безопасность — [`docs/source-verification.md`](docs/source-verification.md)
